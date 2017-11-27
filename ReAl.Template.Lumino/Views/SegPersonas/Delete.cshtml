@@ -23,7 +23,6 @@
 <div class="panel panel-default">
 <div class="panel-heading">¿Est&aacute; seguro que desea ELIMINAR &eacute;ste registro?</div>
 <div class="panel-body">
-<hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Nombres)
@@ -55,11 +54,47 @@
         <dd>
             @Html.DisplayFor(model => model.Correo)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apiestado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Apiestado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apitransaccion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Apitransaccion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usucre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usucre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Feccre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Feccre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usumod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usumod)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecmod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fecmod)
+        </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="Delete" role="form" method="post" id="DeleteForm" class="form-horizontal row-border">
         <input type="hidden" asp-for="Idspe" />
-        <input type="submit" value="Eliminar" class="btn btn-default" /> |
+        <input type="submit" value="Eliminar" class="btn btn-default" onclick="Validate(this, event);"/> |
         <a asp-action="Index">Volver</a>
     </form>
 </div>
@@ -72,5 +107,27 @@
 {
 	<!-- Sweetalert JavaScript -->
 	<script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+	
+	<script>
+		function Validate(ctl, event)
+		{
+			event.preventDefault();
+			swal({
+				title: "¿Seguro que desea ELIMINAR el registro?",
+				text: "Verifique la información antes de aceptar!",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Eliminar",
+				cancelButtonText: "Cancelar"
+			}).then(function(isConfirm) {
+				if (isConfirm.value) {
+					$("#DeleteForm").submit();
+				} else {
+					swal("Cancelled", "Se ha cancelado la accion", "error");
+				}
+			});
+		}
+	</script>
 }	
 

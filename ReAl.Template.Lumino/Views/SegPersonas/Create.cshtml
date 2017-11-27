@@ -21,34 +21,50 @@
 <div class="panel panel-default">
 <div class="panel-heading">Create</div>
 <div class="panel-body">
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-6">
+        <form asp-action="Create" role="form" method="post" id="CreateForm" class="form-horizontal row-border">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nombres" class="control-label"></label>
-                <input asp-for="Nombres" class="form-control" />
+                <label asp-for="Nombres" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="Nombres" class="form-control" />
+				</div>
                 <span asp-validation-for="Nombres" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Apellidos" class="control-label"></label>
-                <input asp-for="Apellidos" class="form-control" />
+                <label asp-for="Apellidos" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="Apellidos" class="form-control" />
+				</div>
                 <span asp-validation-for="Apellidos" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Ci" class="control-label"></label>
-                <input asp-for="Ci" class="form-control" />
+                <label asp-for="Sexo" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="Sexo" class="form-control" />
+				</div>
+                <span asp-validation-for="Sexo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ci" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="Ci" class="form-control" />
+				</div>
                 <span asp-validation-for="Ci" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Correo" class="control-label"></label>
-                <input asp-for="Correo" class="form-control" />
+                <label asp-for="Correo" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="Correo" class="form-control" />
+				</div>
                 <span asp-validation-for="Correo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+	        <div class="form-group">
+	        	<div class="col-md-10">
+			        <input type="submit" value="Guardauar nuevo" class="btn btn-default" onclick="Validate(this, event);"/>
+		        </div>
+	        </div>
         </form>
     </div>
 </div>
@@ -66,5 +82,27 @@
 {
 	<!-- Sweetalert JavaScript -->
 	<script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+	
+	<script>
+		function Validate(ctl, event)
+		{
+			event.preventDefault();
+			swal({
+				title: "¿Seguro que desea guardar el registro?",
+				text: "Verifique la información antes de aceptar!",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Crear",
+				cancelButtonText: "Cancelar"
+			}).then(function(isConfirm) {
+				if (isConfirm.value) {
+					$("#CreateForm").submit();
+				} else {
+					swal("Cancelled", "Se ha cancelado la accion", "error");
+				}
+			});
+		}
+	</script>
 }	
 

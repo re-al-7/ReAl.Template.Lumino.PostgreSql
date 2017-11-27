@@ -20,40 +20,55 @@
 <div class="col-lg-12">
 <div class="panel panel-default">
 <div class="panel-heading">Edit</div>
-<div class="panel-body">
-<hr />
+<div class="panel-body">	
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="Edit">
+        <form asp-action="Edit" role="form" method="post" id="EditForm" class="form-horizontal row-border">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Idspe" />
             <div class="form-group">
-                <label asp-for="Nombres" class="control-label"></label>
-                <input asp-for="Nombres" class="form-control" />
+                <label asp-for="Nombres" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="Nombres" class="form-control" />
+				</div>
                 <span asp-validation-for="Nombres" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Apellidos" class="control-label"></label>
-                <input asp-for="Apellidos" class="form-control" />
+                <label asp-for="Apellidos" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="Apellidos" class="form-control" />
+				</div>
                 <span asp-validation-for="Apellidos" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Sexo" class="control-label"></label>
-                <input asp-for="Sexo" class="form-control" />
+                <label asp-for="Sexo" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="Sexo" class="form-control" />
+				</div>
                 <span asp-validation-for="Sexo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Ci" class="control-label"></label>
-                <input asp-for="Ci" class="form-control" />
+                <label asp-for="Ci" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="Ci" class="form-control" />
+				</div>
                 <span asp-validation-for="Ci" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Correo" class="control-label"></label>
-                <input asp-for="Correo" class="form-control" />
+                <label asp-for="Correo" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="Correo" class="form-control" />
+				</div>
                 <span asp-validation-for="Correo" class="text-danger"></span>
             </div>
+				<input asp-for="Apiestado" class="form-control" type="hidden" />
+				<input asp-for="Apitransaccion" class="form-control" type="hidden" />
+				<input asp-for="Usucre" class="form-control" type="hidden" />
+				<input asp-for="Feccre" class="form-control" type="hidden" />
+				<input asp-for="Usumod" class="form-control" type="hidden" />
+				<input asp-for="Fecmod" class="form-control" type="hidden" />
             <div class="form-group">
-                <input type="submit" value="Guardar cambios" class="btn btn-default" />
+                <input type="submit" value="Guardar cambios" class="btn btn-default" onclick="Validate(this, event);"/>
             </div>
         </form>
     </div>
@@ -73,5 +88,27 @@
 {
 	<!-- Sweetalert JavaScript -->
 	<script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+	
+	<script>
+		function Validate(ctl, event)
+		{
+			event.preventDefault();
+			swal({
+				title: "¿Seguro que desea guardar los cambios del registro?",
+				text: "Verifique la información antes de aceptar!",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Actualizar",
+				cancelButtonText: "Cancelar"
+			}).then(function(isConfirm) {
+				if (isConfirm.value) {
+					$("#EditForm").submit();
+				} else {
+					swal("Cancelled", "Se ha cancelado la accion", "error");
+				}
+			});
+		}
+	</script>
 }	
 

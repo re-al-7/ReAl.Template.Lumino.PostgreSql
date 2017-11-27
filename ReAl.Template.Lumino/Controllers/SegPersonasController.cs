@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ReAl.Template.Lumino.Models;
 
@@ -59,7 +62,7 @@ namespace ReAl.Template.Lumino.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Idspe,Nombres,Apellidos,Sexo,Ci,Correo")] SegPersonas segPersonas)
+        public async Task<IActionResult> Create([Bind("Idspe,Nombres,Apellidos,Sexo,Ci,Correo,Apiestado,Apitransaccion,Usucre,Feccre,Usumod,Fecmod")] SegPersonas segPersonas)
         {
 			if (ModelState.IsValid)
             {
@@ -95,7 +98,7 @@ namespace ReAl.Template.Lumino.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Idspe,Nombres,Apellidos,Sexo,Ci,Correo")] SegPersonas segPersonas)
+        public async Task<IActionResult> Edit(long id, [Bind("Idspe,Nombres,Apellidos,Sexo,Ci,Correo,Apiestado,Apitransaccion,Usucre,Feccre,Usumod,Fecmod")] SegPersonas segPersonas)
         {
             if (id != segPersonas.Idspe)
             {

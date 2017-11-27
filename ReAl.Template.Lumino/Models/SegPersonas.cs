@@ -18,22 +18,16 @@ namespace ReAl.Template.Lumino.Models
         public string Ci { get; set; }
         public string Correo { get; set; }
         
-        [ScaffoldColumn(false)]
         public string Apiestado { get; set; }
         
-        [ScaffoldColumn(false)]
         public string Apitransaccion { get; set; }
         
-        [ScaffoldColumn(false)]
         public string Usucre { get; set; }
         
-        [ScaffoldColumn(false)]
         public DateTime Feccre { get; set; }
         
-        [ScaffoldColumn(false)]
         public string Usumod { get; set; }
         
-        [ScaffoldColumn(false)]
         public DateTime? Fecmod { get; set; }
 
         public ICollection<SegUsuarios> SegUsuarios { get; set; }
