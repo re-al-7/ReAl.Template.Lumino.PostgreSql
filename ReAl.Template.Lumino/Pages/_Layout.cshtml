@@ -1,0 +1,173 @@
+﻿@using Models
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] - Test.CoreMvc</title>
+    <environment include="Development">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="~/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+        <link href="~/lib/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+        <link href="~/css/styles.css" rel="stylesheet">
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/integrate.min.css.gz" asp-append-version="true" />
+    </environment>
+		
+    @RenderSection("Styles", required: false)
+    
+    <!--Estilos Adicionales-->
+    <style>
+        .bootstrap-select > .dropdown-toggle {
+            height: 46px !important;
+            padding: 10px 16px !important;            
+            font-size: 18px !important;
+            border-radius: 6px !important;
+        }
+    </style>
+    
+    <!--Theme Switcher-->
+    <style id="hide-theme">
+        body{
+            display:none;
+        }
+    </style>
+    <script type="text/javascript">
+        function setTheme(name){
+            var theme = document.getElementById('theme-css');
+            var style = '../css/theme-' + name + '.css';
+            if(theme){
+                theme.setAttribute('href', style);
+            } else {
+                var head = document.getElementsByTagName('head')[0];
+                theme = document.createElement("link");
+                theme.setAttribute('rel', 'stylesheet');
+                theme.setAttribute('href', style);
+                theme.setAttribute('id', 'theme-css');
+                head.appendChild(theme);
+            }
+            window.localStorage.setItem('lumino-theme', name);
+        }
+        var selectedTheme = window.localStorage.getItem('lumino-theme');
+        if(selectedTheme) {
+            setTheme(selectedTheme);
+        }
+        window.setTimeout(function(){
+            var el = document.getElementById('hide-theme');
+            el.parentNode.removeChild(el);
+        }, 5);
+    </script>
+    <!-- End Theme Switcher -->
+		
+    <!--Custom Font-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <!--[if lt IE 9]>
+        <script src="~/lib/html5shiv/dist/html5shiv.js"></script>
+        <script src="~/lib/respond/dest/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse"><span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span></button>
+                <a class="navbar-brand" href="#"><span>Lumino</span>Admin</a>                
+                <ul class="navbar-right theme-switcher">
+                    <li><span>Choose Theme:</span></li>
+                    <li><a href="#" title="Default" data-theme="default" class="theme-btn theme-btn-default">Default</a></li>
+                    <li><a href="#" title="Iris" data-theme="iris" class="theme-btn theme-btn-iris">Iris</a></li>
+                    <li><a href="#" title="Midnight" data-theme="midnight" class="theme-btn theme-btn-midnight">Midnight</a></li>
+                    <li><a href="#" title="Lime" data-theme="lime"  class="theme-btn theme-btn-lime">Lime</a></li>
+                    <li><a href="#" title="Rose" data-theme="rose" class="theme-btn theme-btn-rose">Rose</a></li>
+                </ul>
+            </div>
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+        <div class="profile-sidebar">
+            <div class="profile-userpic">
+                <img src="~/images/profile-pic-2.jpg" width="60" alt="User Avatar" class="img-circle" />
+            </div>
+            <div class="profile-usertitle">
+                <div class="profile-usertitle-name">
+                    <a asp-area="" asp-controller="Template" asp-action="Profile" >
+                        @Model.Usuario
+                    </a>                    
+                </div>
+                <div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
+            </div>
+            <div class="dropdown" style="width: 90%">
+                <button class="btn btn-primary dropdown-toggle" style="width: 100%; " type="button" data-toggle="dropdown">Clasificadores
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu" style="width: 100%; margin-top: 0px">
+                    @foreach (SegAplicaciones item in @Model.ListApp)
+                    {
+                        <li>                            
+                            <a asp-area="" asp-controller="Dashboard" asp-action="Index" asp-route-app=@item.Sigla >
+                                @item.Sigla
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="divider"></div>
+        <form role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+        </form>
+        <ul class="nav menu">
+            @foreach (SegPaginas item in @Model.ListPages)
+            {
+                <li class="@(@ViewContext.RouteData.Values["Page"].ToString().Split('/')[1].ToString() == @item.Metodo
+                                 && @ViewContext.RouteData.Values["Page"].ToString().Split('/')[2].ToString() == @item.Accion ? "active" : "")">                    
+                    <a asp-area="" asp-controller=@item.Metodo asp-action=@item.Accion><em class="fa fa-dashboard">&nbsp;</em> @item.Sigla </a>
+                </li>
+            }            
+            <li class="parent "><a data-toggle="collapse" href="#sub-item-1">
+                    <em class="fa fa-file-o">&nbsp;</em> Pages <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><i class="fa fa-plus"></i></span>
+                </a>
+                <ul class="children collapse" id="sub-item-1">
+                    <li><a class="" href="gallery.html">
+                        Gallery
+                    </a></li>
+                    <li><a class="" href="search.html">
+                        Search
+                    </a></li>
+                    <li><a class="" href="login.html">
+                        Login
+                    </a></li>
+                    <li><a class="" href="error.html">
+                        Error 404
+                    </a></li>
+                </ul>
+            </li>
+        </ul>
+    </div><!--/.sidebar-->
+	
+    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        @RenderBody()
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>        
+        <script src="~/lib/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+        <script src="~/js/custom.js"></script>
+    </environment>
+    <environment exclude="Development">        
+        <script src="~/js/integrate.min.js.gz" asp-append-version="true"></script>
+    </environment>   
+
+    @RenderSection("IncludeScripts", required: false)
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

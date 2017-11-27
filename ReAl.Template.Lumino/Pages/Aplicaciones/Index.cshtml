@@ -1,0 +1,155 @@
+﻿@page
+@using Aplicaciones
+@using ReAl.Template.Lumino.Pages
+@model ReAl.Template.Lumino.Pages.Aplicaciones.IndexModel
+
+@section Styles
+{
+    <!-- Bootstrap-Table CSS -->
+    <link href="~/lib/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
+    <!-- Sweetalert CSS -->
+    <link href="~/lib/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+}
+
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="#">
+            <em class="fa fa-home"></em>
+        </a></li>
+        <li class="active">Aplicaciones</li>
+    </ol>
+</div><!--/.row-->
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Aplicaciones</h1>
+    </div>
+</div><!--/.row-->		
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Listado</div>
+            <div class="panel-body">
+                <a asp-page="./Create" title="Nuevo" class="btn btn-primary">
+                    <i class="fa fa-newspaper-o"></i>
+                </a>
+                <form method="post" id="SelectForm">
+                    <table id="miTabla" data-toggle="table" data-show-columns="true" data-pagination="true"
+                           data-search="true" data-show-toggle="true" data-sortable="true"
+                           data-page-size="25" data-pagination-v-align="both" data-show-export="true">
+                        <thead>
+                        <tr>
+                            <th data-halign="center">Aplicacion</th>
+                            <th data-halign="center">Descripcion</th>
+                            <th data-halign="center" data-align="center" data-width="150px">Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in @Model.Listado)
+                        {
+                            <tr>
+                                <td>@item.aplicacionsap </td>
+                                <td>@item.descripcionsap </td>
+                                <td>
+                                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })*@
+                                    <a asp-page="./Edit" asp-route-id="@item.aplicacionsap"
+                                       title="Editar" class="btn btn-default">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+
+                                    <a class="btn btn-primary" data-id="@item.aplicacionsap"
+                                       data-toggle="modal" data-target="#currentdetail" title="Ver Detalles">
+                                        <i class="fa fa-indent"></i>
+                                    </a>
+
+                                    <button type="submit" asp-page-handler="delete" onclick="deleteObject('@item.aplicacionsap', event)"
+                                            asp-route-id="@item.aplicacionsap" class="btn btn-danger">
+                                        <i class="fa fa-eraser"></i>
+                                    </button>
+
+                                    <a class="btn btn-warning" data-container="body"
+                                       data-toggle="popover" data-trigger="click"
+                                       data-placement="left" data-html="true" title="Auditoria"
+                                       data-content='<b>Usuario Creacion:</b> @item.usucresap <br />
+                                                                         <b>Fecha Creacion:</b> @item.feccresap <br />
+                                                                         <b>Usuario Modificacion:</b> @item.usumodsap <br />
+                                                                         <b>Fecha Modificacion:</b> @item.fecmodsap <br />
+                                                                         <b>Estado:</b> @item.apiestadosap '>
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+
+@section Scripts
+{
+    <!-- Bootstrap-Table -->
+    <script src="~/lib/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    <!-- Sweetalert JavaScript -->
+    <script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+
+    //DataTable
+    $('#miTabla').bootstrapTable();
+
+    <script>
+        function deleteObject(miId, event) {
+            event.preventDefault();
+            swal({
+                title: "Eliminar?",
+                text: "Esta seguro que desea eliminar el registro?",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Eliminar",
+                confirmButtonColor: "#ec6c62"
+            }).then(function(isConfirm) {
+                if (isConfirm.value) {
+                    var $form = $("#SelectForm");
+                    $.ajax({
+                        type: "POST",
+                        cache: false,
+                        url: "/SegAplicaciones?id=" + miId + "&handler=delete",
+                        data: $form.serializeArray(),
+                        success: function(response) {
+                            swal({
+                                title: 'Eliminado',
+                                text: 'Se ha eliminado el registro',
+                                type: 'success'
+                            }).then(function() {
+                                window.location.href = '@Url.Page("")';
+                            });
+                        }
+                    });
+                } else {
+                    swal("Cancelled", "Se ha cancelado la accion!", "error");
+                }
+            });
+        }
+
+    </script>
+
+    @if (TempData["Message"] != null)
+    {
+        <script>
+            $(window).load(function() {
+                $(document).ready(function() {
+                    swal({
+                        title: 'Message',
+                        text: '@TempData["Message"]',
+                        type: 'success'
+                    });
+                });
+            });
+        </script>
+    }
+}

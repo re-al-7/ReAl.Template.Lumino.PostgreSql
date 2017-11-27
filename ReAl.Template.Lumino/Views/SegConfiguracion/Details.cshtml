@@ -1,0 +1,90 @@
+@model ReAl.Template.Lumino.Models.SegConfiguracion
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SegConfiguracion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Configuracion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Configuracion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Funcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Funcion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Parametrosentrada)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Parametrosentrada)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Parametrossalida)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Parametrossalida)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apiestado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Apiestado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apitransaccion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Apitransaccion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usucre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usucre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Feccre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Feccre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usumod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usumod)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecmod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fecmod)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdstaNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdstaNavigation.Alias)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Idscf">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,141 @@
+﻿@model IEnumerable<ReAl.Template.Lumino.Models.SegUsuarios>
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+@section Styles
+{
+    <link href="~/lib/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
+}
+
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a href="#">
+            <em class="fa fa-home"></em>
+        </a></li>
+        <li class="active">@ViewData["Title"]</li>
+    </ol>
+</div><!--/.row-->
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">@ViewData["Title"]</h1>
+    </div>
+</div><!--/.row-->		
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Data Table
+            </div>
+            <div class="panel-body">
+                <table id="miTabla" data-toggle="table" data-show-columns="true" data-pagination="true"
+                       data-search="true" data-show-toggle="true" data-sortable="true"
+                       data-page-size="25" data-pagination-v-align="both" data-show-export="true">
+                    <thead>
+                    <tr>                                    
+                        <th data-halign="center">@Html.DisplayNameFor(model => model.Login)</th>
+                        <th data-halign="center">@Html.DisplayNameFor(model => model.IdspeNavigation.Nombres)</th>
+                        <th data-halign="center">@Html.DisplayNameFor(model => model.IdspeNavigation.Apellidos)</th>
+                        <th data-halign="center" data-align="center" data-width="150px">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>                                    
+                            <td>@Html.DisplayFor(modelItem => item.Login)</td>
+                            <td>@Html.DisplayFor(modelItem => item.IdspeNavigation.Nombres)</td>
+                            <td>@Html.DisplayFor(modelItem => item.IdspeNavigation.Apellidos)</td>
+                            <td>
+                                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })*@
+                                <a asp-action="Edit" asp-route-id="@item.Idsus"
+                                   title="Editar" class="btn btn-default">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+        
+                                <a class="btn btn-primary" data-id="@item.Idsus"
+                                   data-toggle="modal" data-target="#currentdetail" title="Ver Detalles">
+                                    <i class="fa fa-indent"></i>
+                                </a>
+        
+                                <a class="btn btn-warning" data-container="body"
+                                   data-toggle="popover" data-trigger="click"
+                                   data-placement="left" data-html="true" title="Auditoria"
+                                   data-content='<b>Usuario Creacion:</b> @item.Usucre <br />
+                                                                 <b>Fecha Creacion:</b> @item.Feccre <br />
+                                                                 <b>Usuario Modificacion:</b> @item.Usumod <br />
+                                                                 <b>Fecha Modificacion:</b> @item.Fecmod <br />
+                                                                 <b>Estado:</b> @item.Apiestado '>
+                                    <i class="fa fa-search"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }                            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Detail Modal -->
+<div class="modal fade" id="currentdetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Detalle del registro</h4>
+            </div>
+            <div class="modal-body">
+                <div id="editor-content-container"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+@section Scripts
+{
+    <script src="~/lib/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    
+    <script>
+        //DataTable
+        $('#miTabla').bootstrapTable();
+
+        //Details
+        $(function () {
+            $('.editor-container').click(function () {
+                var pid = $(this).attr('data-id');
+                var url = "/Home/Details/" + pid;
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    success: function (data) {
+                        $('#editor-content-container').html(data);
+                        $('#currentdetail').modal('show');
+                    }
+                });
+            });
+
+            $('#editor-container').on('hidden.bs.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+        });
+
+        function success(data, status, xhr) {
+            $('#editor-container').modal('hide');
+        }
+
+        function failure(xhr, status, error) {
+            $('#editor-container').modal('show');
+        }        
+    </script>
+}

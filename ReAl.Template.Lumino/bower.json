@@ -1,0 +1,15 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7",
+    "bootstrap-table": "^1.11.1",
+    "font-awesome": "^4.7.0",
+    "respond": "^1.4.2",
+    "html5shiv": "^3.7.3",
+    "bootstrap-datepicker": "^1.7.1",
+    "bootstrap-select": "^1.12.4",
+    "sweetalert2": "^7.0.3"
+  }
+}

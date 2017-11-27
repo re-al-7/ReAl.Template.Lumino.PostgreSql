@@ -1,0 +1,176 @@
+﻿@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
+@using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore
+@using System.Collections.Generic
+@using System.Linq
+@@model @GetEnumerableTypeExpression(Model.ViewDataTypeName)
+
+
+@{
+    if (Model.IsPartialView)
+    {
+    }
+    else if (Model.IsLayoutPageSelected)
+    {
+@:@@section Styles
+@:{
+	@:<!-- Bootstrap-Table CSS -->
+	@:<link href="~/lib/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
+	@:<!-- Sweetalert CSS -->
+	@:<link href="~/lib/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+@:}	
+@:
+@:@@{
+    @:ViewData["Title"] = "@Model.ViewName";
+        if (!string.IsNullOrEmpty(Model.LayoutPageFile))
+        {
+    @:Layout = "@Model.LayoutPageFile";
+        }
+@:}
+@:
+@:<div class="row">
+	@:<div class="col-lg-12">
+		@:<h1 class="page-header">@Model.ViewDataTypeShortName</h1>
+	@:</div>
+@:</div><!--/.row-->
+@:
+@:
+    }
+    else
+    {
+@:@@{
+    @:Layout = null;
+@:}
+@:
+@:<!DOCTYPE html>
+@:
+@:<html>
+@:<head>
+    @:<meta name="viewport" content="width=device-width" />
+    @:<title>@Model.ViewName</title>
+@:</head>
+@:<body>
+        //    PushIndent("    ");
+    }
+
+@:<div class="row">
+@:<div class="col-lg-12">
+@:<div class="panel panel-default">
+@:<div class="panel-heading">@Model.ViewName</div>
+@:<div class="panel-body">
+    @:<a asp-action="Create" title="Nuevo" class="btn btn-primary">
+		@:<i class="fa fa-newspaper-o"></i>
+	@:</a>
+	@:<table id="miTabla" data-toggle="table" data-show-columns="true" data-pagination="true"
+				@:data-search="true" data-show-toggle="true" data-sortable="true"
+				@:data-page-size="25" data-pagination-v-align="both" data-show-export="true">
+		@:<thead>
+			@:<tr>
+
+			var properties = Model.ModelMetadata.Properties;
+			foreach (var property in properties)
+			{
+				if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey)
+				{
+					<th>
+						@@Html.DisplayNameFor(model => model.@GetValueExpression(property))
+					</th>
+				}
+			}
+			foreach (var navigation in Model.ModelMetadata.Navigations)
+			{
+				<th>
+					@@Html.DisplayNameFor(model => model.@GetValueExpression(navigation))
+				</th>
+			}
+				@:<th></th>
+			@:</tr>
+		@:</thead>
+		@:<tbody>
+	@:@@foreach (var item in Model) {
+			@:<tr>
+			foreach (PropertyMetadata property in properties)
+			{
+				if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey)
+				{
+				<td>
+					@@Html.DisplayFor(modelItem => item.@GetValueExpression(property))
+				</td>
+				}
+			}
+			foreach (var navigation in Model.ModelMetadata.Navigations)
+			{
+				<td>
+					@@Html.DisplayFor(modelItem => item.@GetValueExpression(navigation).@navigation.DisplayPropertyName)
+				</td>
+			}
+			string pkName = GetPrimaryKeyName();
+			if (pkName != null)
+			{
+				@:<td>
+					@:<a asp-action="Edit" asp-route-id="@@item.@pkName" title="Editar" class="btn btn-default"><i class="fa fa-edit"></i></a> 
+					@:<a asp-action="Details" asp-route-id="@@item.@pkName" title="Ver detalles" class="btn btn-primary"><i class="fa fa-indent"></i></a>
+					@:<a asp-action="Delete" asp-route-id="@@item.@pkName" title="Eliminar" class="btn btn-danger"><i class="fa fa-eraser"></i></a>
+				@:</td>
+			}
+			else
+			{
+				<td>
+					@@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+					@@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+					@@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+				</td>
+			}
+			@:</tr>
+	@:}
+		@:</tbody>
+
+	@:</table>
+@:</div>
+@:</div>
+@:</div>
+@:</div><!-- /.row -->
+@:
+    if(!Model.IsPartialView && !Model.IsLayoutPageSelected)
+    {
+        //ClearIndent();
+@:</body>
+@:</html>
+    }
+	
+@:@@section Scripts
+@:{
+	@:<!-- Bootstrap-Table -->
+	@:<script src="~/lib/bootstrap-table/dist/bootstrap-table.min.js"></script>
+	@:<!-- Sweetalert JavaScript -->
+	@:<script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+	@:<!-- DataTable -->
+	@:$('#miTabla').bootstrapTable();
+@:}	
+@:
+	
+}
+
+@functions
+{
+    string GetPrimaryKeyName()
+    {
+        return (Model.ModelMetadata.PrimaryKeys != null && Model.ModelMetadata.PrimaryKeys.Length == 1)
+        ? Model.ModelMetadata.PrimaryKeys[0].PropertyName
+        : null;
+    }
+
+    string GetValueExpression(IPropertyMetadata property)
+    {
+        return property.PropertyName;
+    }
+
+    string GetValueExpression(INavigationMetadata navigation)
+    {
+        return navigation.AssociationPropertyName;
+    }
+
+    string GetEnumerableTypeExpression(string typeName)
+    {
+        return "IEnumerable<" + typeName + ">";
+    }
+}

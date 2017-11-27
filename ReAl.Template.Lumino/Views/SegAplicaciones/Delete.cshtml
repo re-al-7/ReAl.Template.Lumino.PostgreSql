@@ -1,0 +1,75 @@
+@model ReAl.Template.Lumino.Models.SegAplicaciones
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>SegAplicaciones</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Sigla)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sigla)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apiestado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Apiestado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apitransaccion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Apitransaccion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usucre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usucre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Feccre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Feccre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usumod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usumod)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecmod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fecmod)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Idsap" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

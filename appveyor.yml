@@ -1,0 +1,43 @@
+version: 1.0.{build}
+
+init:
+# Good practise, because Windows line endings are different from Unix/Linux ones
+- cmd: git config --global core.autocrlf true
+
+- ps: '[System.IO.File]::AppendAllText("C:\Windows\System32\drivers\etc\hosts", "`n93.184.221.200  api.nuget.org")'
+  
+install:
+- cmd: >-   
+    npm install -g bower
+
+before_build:
+    # Display .NET Core version
+    - cmd: dotnet --version
+    # Display minimal restore text
+    - cmd: dotnet restore ./ReAl.Template.Lumino/ReAl.Template.Lumino.csproj --verbosity m
+    
+build_script:
+    # output will be in ./src/bin/debug/netcoreapp1.1/publish
+    - cmd: dotnet publish ./ReAl.Template.Lumino/ReAl.Template.Lumino.csproj
+after_build:
+    # For once the build has completed
+    
+artifacts:
+- path: '\ReAl.Template.Lumino\bin\Debug\netcoreapp2.0\publish'
+  name: Lumino
+
+clone_depth: 1
+on_finish :
+    # any cleanup in here    
+
+before_deploy:
+    
+deploy:
+- provider: Environment
+  name: production
+  aspnet_core: true
+  aspnet_core_force_restart: true
+  app_offline: true
+  remove_files: false
+  on:
+      branch: master

@@ -1,0 +1,72 @@
+@model ReAl.Template.Lumino.Models.SegAplicaciones
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SegAplicaciones</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Sigla)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sigla)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apiestado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Apiestado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Apitransaccion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Apitransaccion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usucre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usucre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Feccre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Feccre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Usumod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Usumod)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecmod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fecmod)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Idsap">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
