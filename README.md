@@ -1,6 +1,6 @@
 # Plantilla NetCore para LuminoAdmin con PostgreSql
 
-[![Build status](https://ci.appveyor.com/api/projects/status/h2gb83cvhb2vi3al?svg=true)](https://ci.appveyor.com/project/re_al_/real-template-lumino)
+[![Build status](https://ci.appveyor.com/api/projects/status/6x4u9stx309uk0ey?svg=true)](https://ci.appveyor.com/project/re_al_/real-template-lumino-postgresql)
 
 ---------------------------------------
 
