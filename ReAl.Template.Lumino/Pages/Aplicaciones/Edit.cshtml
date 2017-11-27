@@ -34,9 +34,9 @@
                         <form role="form" method="post" id="EditForm">
                             @Html.ValidationSummary(true, "", new {@class = "alert alert-danger"})
                             <div class="form-group">
-                                <label asp-for="MiAplicacion.Sigla"></label>
-                                <input id="aplicacionsap" asp-for="MiAplicacion.Sigla" class="form-control"></input>
-                                <span asp-validation-for="MiAplicacion.Sigla"></span>
+                                <label asp-for="MiAplicacion.Descripcion"></label>
+                                <input id="Descripcion" asp-for="MiAplicacion.Descripcion" class="form-control"></input>
+                                <span asp-validation-for="MiAplicacion.Descripcion"></span>
                             </div>
                             <button type="submit" class="btn btn-default" onclick="Validate(this, event);">Actualizar</button>
                         </form>
@@ -56,11 +56,11 @@
         function validateData()  
         {  
     
-            if ($("#aplicacionsap").val() == "")  
+            if ($("#Descripcion").val() == "")  
             {  
                 swal("Ingrese Codigo Aplicacion !");  
                 return false;  
-            } else if ($("#descripcionsap").val() == "")  
+            } else if ($("#Descripcion").val() == "")  
             {  
                 swal("Ingrese descripcion !");  
                 return false;  

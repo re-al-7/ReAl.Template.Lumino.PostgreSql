@@ -1,5 +1,6 @@
 ﻿@page
 @using Aplicaciones
+@using Models
 @using ReAl.Template.Lumino.Pages
 @model ReAl.Template.Lumino.Pages.Aplicaciones.IndexModel
 
@@ -46,36 +47,36 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var item in @Model.Listado)
+                        @foreach (SegAplicaciones item in @Model.Listado)
                         {
                             <tr>
-                                <td>@item.aplicacionsap </td>
-                                <td>@item.descripcionsap </td>
+                                <td>@item.Nombre </td>
+                                <td>@item.Descripcion </td>
                                 <td>
                                     @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })*@
-                                    <a asp-page="./Edit" asp-route-id="@item.aplicacionsap"
+                                    <a asp-page="./Edit" asp-route-id="@item.Idsap"
                                        title="Editar" class="btn btn-default">
                                         <i class="fa fa-edit"></i>
                                     </a>
 
-                                    <a class="btn btn-primary" data-id="@item.aplicacionsap"
+                                    <a class="btn btn-primary" data-id="@item.Idsap"
                                        data-toggle="modal" data-target="#currentdetail" title="Ver Detalles">
                                         <i class="fa fa-indent"></i>
                                     </a>
 
-                                    <button type="submit" asp-page-handler="delete" onclick="deleteObject('@item.aplicacionsap', event)"
-                                            asp-route-id="@item.aplicacionsap" class="btn btn-danger">
+                                    <button type="submit" asp-page-handler="delete" onclick="deleteObject('@item.Idsap', event)"
+                                            asp-route-id="@item.Idsap" class="btn btn-danger">
                                         <i class="fa fa-eraser"></i>
                                     </button>
 
                                     <a class="btn btn-warning" data-container="body"
                                        data-toggle="popover" data-trigger="click"
                                        data-placement="left" data-html="true" title="Auditoria"
-                                       data-content='<b>Usuario Creacion:</b> @item.usucresap <br />
-                                                                         <b>Fecha Creacion:</b> @item.feccresap <br />
-                                                                         <b>Usuario Modificacion:</b> @item.usumodsap <br />
-                                                                         <b>Fecha Modificacion:</b> @item.fecmodsap <br />
-                                                                         <b>Estado:</b> @item.apiestadosap '>
+                                       data-content='<b>Usuario Creacion:</b> @item.Usucre <br />
+                                                                         <b>Fecha Creacion:</b> @item.Feccre <br />
+                                                                         <b>Usuario Modificacion:</b> @item.Usumod <br />
+                                                                         <b>Fecha Modificacion:</b> @item.Fecmod <br />
+                                                                         <b>Estado:</b> @item.Apiestado '>
                                         <i class="fa fa-search"></i>
                                     </a>
                                 </td>
