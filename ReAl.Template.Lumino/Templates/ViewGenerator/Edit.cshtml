@@ -53,11 +53,10 @@
 @:<div class="col-lg-12">
 @:<div class="panel panel-default">
 @:<div class="panel-heading">@Model.ViewName</div>
-@:<div class="panel-body">
-@:<hr />
+@:<div class="panel-body">	
 @:<div class="row">
     @:<div class="col-md-6">
-        @:<form asp-action="@Model.ViewName">
+        @:<form asp-action="@Model.ViewName" role="form" method="post" id="EditForm" class="form-horizontal row-border">
             @:<div asp-validation-summary="ModelOnly" class="text-danger"></div>
         foreach (PropertyMetadata property in Model.ModelMetadata.Properties)
         {
@@ -77,8 +76,10 @@
                 if (property.IsForeignKey)
                 {
             @:<div class="form-group">
-                @:<label asp-for="@property.PropertyName" class="control-label"></label>
-                @:<select asp-for="@property.PropertyName" class="form-control" asp-items="ViewBag.@property.PropertyName"></select>
+                @:<label asp-for="@property.PropertyName" class="col-md-2 control-label"></label>
+				@:<div class="col-md-10">
+					@:<select asp-for="@property.PropertyName" class="form-control" asp-items="ViewBag.@property.PropertyName"></select>
+				@:</div>
                 @:<span asp-validation-for="@property.PropertyName" class="text-danger"></span>
             @:</div>
                     continue;
@@ -98,16 +99,27 @@
                 else if (property.IsEnum && !property.IsEnumFlags)
                 {
             @:<div class="form-group">
-                @:<label asp-for="@property.PropertyName" class="control-label"></label>
-                @:<select asp-for="@property.PropertyName" class="form-control"></select>
+                @:<label asp-for="@property.PropertyName" class="col-md-2 control-label"></label>
+				@:<div class="col-md-10">
+					@:<select asp-for="@property.PropertyName" class="form-control"></select>
+				@:<div>
                 @:<span asp-validation-for="@property.PropertyName" class="text-danger"></span>
             @:</div>
                 }
+				else if (property.PropertyName == "Apiestado" || property.PropertyName == "Apitransaccion" || property.PropertyName == "Feccre" || property.PropertyName == "Usucre" || property.PropertyName == "Fecmod" || property.PropertyName == "Usumod")
+				{
+				@:<input asp-for="@property.PropertyName" class="form-control" type="hidden" />
+				}
+				else if (property.IsPrimaryKey)
+				{
+				}
                 else
                 {
             @:<div class="form-group">
-                @:<label asp-for="@property.PropertyName" class="control-label"></label>
-                @:<input asp-for="@property.PropertyName" class="form-control" />
+                @:<label asp-for="@property.PropertyName" class="col-md-2 control-label"></label>
+				@:<div class="col-md-10">
+					@:<input asp-for="@property.PropertyName" class="form-control" />
+				@:</div>
                 @:<span asp-validation-for="@property.PropertyName" class="text-danger"></span>
             @:</div>
                 }
@@ -121,7 +133,9 @@
         }
     }
             <div class="form-group">
-                <input type="submit" value="Guardar cambios" class="btn btn-default" />
+				<div class="col-md-10">
+					<input type="submit" value="Guardar cambios" class="btn btn-default" onclick="Validate(this, event);"/>
+				</div>
             </div>
         </form>
     </div>
@@ -155,6 +169,28 @@
 @:{
 	@:<!-- Sweetalert JavaScript -->
 	@:<script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+	@:
+	@:<script>
+		@:function Validate(ctl, event)
+		@:{
+			@:event.preventDefault();
+			@:swal({
+				@:title: "¿Seguro que desea guardar los cambios del registro?",
+				@:text: "Verifique la información antes de aceptar!",
+				@:type: "warning",
+				@:showCancelButton: true,
+				@:confirmButtonColor: "#DD6B55",
+				@:confirmButtonText: "Actualizar",
+				@:cancelButtonText: "Cancelar"
+			@:}).then(function(isConfirm) {
+				@:if (isConfirm.value) {
+					@:$("#EditForm").submit();
+				@:} else {
+					@:swal("Cancelled", "Se ha cancelado la accion", "error");
+				@:}
+			@:});
+		@:}
+	@:</script>
 @:}	
 @:
 	

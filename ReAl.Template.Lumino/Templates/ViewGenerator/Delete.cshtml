@@ -56,7 +56,6 @@
 <div class="panel panel-default">
 <div class="panel-heading">¿Est&aacute; seguro que desea ELIMINAR &eacute;ste registro?</div>
 <div class="panel-body">
-<hr />
     <dl class="dl-horizontal">
 @{
     foreach (var property in Model.ModelMetadata.Properties)
@@ -82,14 +81,14 @@
     }
     @:</dl>
     @:
-    @:<form asp-action="@Model.ViewName">
+    @:<form asp-action="@Model.ViewName" role="form" method="post" id="DeleteForm" class="form-horizontal row-border">
         foreach (var property in Model.ModelMetadata.Properties)
         {
             if(property.IsPrimaryKey){
         @:<input type="hidden" asp-for="@GetValueExpression(property)" />
             }
         }
-        @:<input type="submit" value="Eliminar" class="btn btn-default" /> |
+        @:<input type="submit" value="Eliminar" class="btn btn-default" onclick="Validate(this, event);"/> |
         @:<a asp-action="Index">Volver</a>
     @:</form>
 @:</div>
@@ -111,6 +110,28 @@
 @:{
 	@:<!-- Sweetalert JavaScript -->
 	@:<script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+	@:
+	@:<script>
+		@:function Validate(ctl, event)
+		@:{
+			@:event.preventDefault();
+			@:swal({
+				@:title: "¿Seguro que desea ELIMINAR el registro?",
+				@:text: "Verifique la información antes de aceptar!",
+				@:type: "warning",
+				@:showCancelButton: true,
+				@:confirmButtonColor: "#DD6B55",
+				@:confirmButtonText: "Eliminar",
+				@:cancelButtonText: "Cancelar"
+			@:}).then(function(isConfirm) {
+				@:if (isConfirm.value) {
+					@:$("#DeleteForm").submit();
+				@:} else {
+					@:swal("Cancelled", "Se ha cancelado la accion", "error");
+				@:}
+			@:});
+		@:}
+	@:</script>
 @:}	
 @:
 }

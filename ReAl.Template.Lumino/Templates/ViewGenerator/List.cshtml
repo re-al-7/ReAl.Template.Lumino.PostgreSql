@@ -71,9 +71,15 @@
 			{
 				if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey)
 				{
-					<th>
-						@@Html.DisplayNameFor(model => model.@GetValueExpression(property))
-					</th>
+					if (property.PropertyName == "Apiestado" || property.PropertyName == "Apitransaccion" || property.PropertyName == "Feccre" || property.PropertyName == "Usucre" || property.PropertyName == "Fecmod" || property.PropertyName == "Usumod")
+					{
+					}
+					else
+					{
+						<th>
+							@@Html.DisplayNameFor(model => model.@GetValueExpression(property))
+						</th>
+					}
 				}
 			}
 			foreach (var navigation in Model.ModelMetadata.Navigations)
@@ -82,7 +88,7 @@
 					@@Html.DisplayNameFor(model => model.@GetValueExpression(navigation))
 				</th>
 			}
-				@:<th></th>
+				@:<th>Acciones</th>
 			@:</tr>
 		@:</thead>
 		@:<tbody>
@@ -92,9 +98,15 @@
 			{
 				if (property.Scaffold && !property.IsPrimaryKey && !property.IsForeignKey)
 				{
-				<td>
-					@@Html.DisplayFor(modelItem => item.@GetValueExpression(property))
-				</td>
+					if (property.PropertyName == "Apiestado" || property.PropertyName == "Apitransaccion" || property.PropertyName == "Feccre" || property.PropertyName == "Usucre" || property.PropertyName == "Fecmod" || property.PropertyName == "Usumod")
+					{
+					}
+					else
+					{
+					<td>
+						@@Html.DisplayFor(modelItem => item.@GetValueExpression(property))
+					</td>
+					}
 				}
 			}
 			foreach (var navigation in Model.ModelMetadata.Navigations)
