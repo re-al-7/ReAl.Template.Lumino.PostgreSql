@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using ReAl.Template.Lumino.Models;
 
 namespace ReAl.Template.Lumino.Controllers
@@ -66,9 +67,24 @@ namespace ReAl.Template.Lumino.Controllers
         {
 			if (ModelState.IsValid)
             {
-                _context.Add(segPersonas);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+				try
+				{
+					_context.Add(segPersonas);
+					await _context.SaveChangesAsync();
+                	return RedirectToAction(nameof(Index));
+				}
+				catch (Exception exp)
+                {
+                    if (exp.InnerException is NpgsqlException)
+                        ViewBag.ErrorDb = exp.InnerException.Message;                        
+                    else
+                        ModelState.AddModelError("", exp.Message);
+                        
+                    ViewBag.ListApp = GetAplicaciones();
+                    ViewBag.ListPages = GetPages();
+                    ViewData["Usuario"] = getUserName();
+                    return View();
+                }  
             }
             return View(segPersonas);
         }
@@ -124,6 +140,18 @@ namespace ReAl.Template.Lumino.Controllers
                         throw;
                     }
                 }
+				catch (Exception exp)
+                {
+                    if (exp.InnerException is NpgsqlException)
+                        ViewBag.ErrorDb = exp.InnerException.Message;                        
+                    else
+                        ModelState.AddModelError("", exp.Message);
+                        
+                    ViewBag.ListApp = GetAplicaciones();
+                    ViewBag.ListPages = GetPages();
+                    ViewData["Usuario"] = getUserName();
+                    return View(segPersonas);
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(segPersonas);
@@ -156,10 +184,25 @@ namespace ReAl.Template.Lumino.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var segPersonas = await _context.SegPersonas.SingleOrDefaultAsync(m => m.Idspe == id);
-            _context.SegPersonas.Remove(segPersonas);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+			try
+			{
+				var segPersonas = await _context.SegPersonas.SingleOrDefaultAsync(m => m.Idspe == id);
+				_context.SegPersonas.Remove(segPersonas);
+				await _context.SaveChangesAsync();
+				return RedirectToAction(nameof(Index));
+			}
+			catch (Exception exp)
+            {
+                if (exp.InnerException is NpgsqlException)
+                    ViewBag.ErrorDb = exp.InnerException.Message;                        
+                else
+                    ModelState.AddModelError("", exp.Message);
+                    
+                ViewBag.ListApp = GetAplicaciones();
+                ViewBag.ListPages = GetPages();
+                ViewData["Usuario"] = getUserName();
+                return View();
+            }     
         }
 
         private bool SegPersonasExists(long id)

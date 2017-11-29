@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 @{
     foreach (var namespaceName in Model.RequiredNamespaces)
     {
@@ -140,14 +141,29 @@ namespace @Model.ControllerNamespace
         {
 			if (ModelState.IsValid)
             {
+				try
+				{
 @{
-    if (!string.IsNullOrEmpty(primaryKeyType) && IsGuid(primaryKeyType))
-    {
-                @:@(Model.ModelVariable).@primaryKeyName = Guid.NewGuid();
-    }
-                @:_context.Add(@Model.ModelVariable);
-                @:await _context.SaveChangesAsync();
-}                return RedirectToAction(nameof(Index));
+		if (!string.IsNullOrEmpty(primaryKeyType) && IsGuid(primaryKeyType))
+		{
+					@:@(Model.ModelVariable).@primaryKeyName = Guid.NewGuid();
+		}
+					@:_context.Add(@Model.ModelVariable);
+					@:await _context.SaveChangesAsync();
+}                	return RedirectToAction(nameof(Index));
+				}
+				catch (Exception exp)
+                {
+                    if (exp.InnerException is NpgsqlException)
+                        ViewBag.ErrorDb = exp.InnerException.Message;                        
+                    else
+                        ModelState.AddModelError("", exp.Message);
+                        
+                    ViewBag.ListApp = GetAplicaciones();
+                    ViewBag.ListPages = GetPages();
+                    ViewData["Usuario"] = getUserName();
+                    return View();
+                }  
             }
 @{
     foreach (var property in relatedProperties.Values)
@@ -215,6 +231,18 @@ namespace @Model.ControllerNamespace
                         throw;
                     }
                 }
+				catch (Exception exp)
+                {
+                    if (exp.InnerException is NpgsqlException)
+                        ViewBag.ErrorDb = exp.InnerException.Message;                        
+                    else
+                        ModelState.AddModelError("", exp.Message);
+                        
+                    ViewBag.ListApp = GetAplicaciones();
+                    ViewBag.ListPages = GetPages();
+                    ViewData["Usuario"] = getUserName();
+                    return View(@Model.ModelVariable);
+                }
                 return RedirectToAction(nameof(Index));
             }
 @{
@@ -253,10 +281,25 @@ namespace @Model.ControllerNamespace
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(@primaryKeyShortTypeName id)
         {
-            var @Model.ModelVariable = await _context.@(entitySetName).SingleOrDefaultAsync(m => m.@primaryKeyName == id);
-            _context.@(entitySetName).Remove(@Model.ModelVariable);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+			try
+			{
+				var @Model.ModelVariable = await _context.@(entitySetName).SingleOrDefaultAsync(m => m.@primaryKeyName == id);
+				_context.@(entitySetName).Remove(@Model.ModelVariable);
+				await _context.SaveChangesAsync();
+				return RedirectToAction(nameof(Index));
+			}
+			catch (Exception exp)
+            {
+                if (exp.InnerException is NpgsqlException)
+                    ViewBag.ErrorDb = exp.InnerException.Message;                        
+                else
+                    ModelState.AddModelError("", exp.Message);
+                    
+                ViewBag.ListApp = GetAplicaciones();
+                ViewBag.ListPages = GetPages();
+                ViewData["Usuario"] = getUserName();
+                return View();
+            }     
         }
 
         private bool @(Model.ModelTypeName)Exists(@primaryKeyShortTypeName id)
