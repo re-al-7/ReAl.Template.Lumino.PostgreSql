@@ -43,6 +43,13 @@ namespace ReAl.Template.Lumino.Controllers
                     return View();
                 }
                 
+                const string incompleteInformation = "Debe especificar un usuario y contraseña para continuar.";
+                if (user.Login == "" || user.Password == "")
+                {
+                    ModelState.AddModelError("", incompleteInformation);
+                    return View();
+                }
+                
                 var obj = _context.SegUsuarios.SingleOrDefault(m => m.Login == user.Login);
                 if (obj == null)
                 {
