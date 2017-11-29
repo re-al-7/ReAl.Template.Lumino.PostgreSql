@@ -31,7 +31,8 @@ namespace ReAl.Template.Lumino.Helpers
                 return new List<SegPaginas>();
             else
                 return  context.SegPaginas.ToList().Where(paginas =>
-                paginas.Idsap == objApp.Idsap).ToList();
+                paginas.Idsap == objApp.Idsap).OrderBy(x => x.Prioridad != null) // False comes before true
+                    .ThenBy(x => x.Prioridad).ToList();
 
             /*
             obj = new SegPaginas();
