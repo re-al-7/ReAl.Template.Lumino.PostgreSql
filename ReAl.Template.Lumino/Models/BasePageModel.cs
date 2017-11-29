@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReAl.Template.Lumino.Helpers;
 
@@ -15,6 +16,13 @@ namespace ReAl.Template.Lumino.Models
             _context = context;
         }
         
+        public string GetCurrentApp()
+        {
+            if (this.HttpContext.Session.Keys.Contains("currentApp"))
+                return this.HttpContext.Session.GetString("currentApp").ToString();
+            return null;
+        }
+        
         public string getLogin()
         {
             if (User.Identity.IsAuthenticated)
@@ -22,7 +30,7 @@ namespace ReAl.Template.Lumino.Models
             return null;
         }
 
-        public string getUserName()
+        public string GetUserName()
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -38,7 +46,7 @@ namespace ReAl.Template.Lumino.Models
             return null;
         }
 
-        public SegUsuarios getUser()
+        public SegUsuarios GetUser()
         {
             if (User.Identity.IsAuthenticated)
             {

@@ -76,10 +76,11 @@ namespace @Model.ControllerNamespace
 @{
         @:public async Task<IActionResult> Index()
         @:{
+			@:/*
 			@:ViewBag.ListApp = GetAplicaciones();
             @:ViewBag.ListPages = GetPages();
             @:ViewData["Usuario"] = getUserName();
-			@:
+			@:*/
     var includeExpressions = "";
     includeExpressions = String.Join("", relatedProperties
         .Values
@@ -98,9 +99,11 @@ namespace @Model.ControllerNamespace
         // GET: @routePrefix/Details/5
         public async Task<IActionResult> Details(@primaryKeyNullableTypeName id)
         {
+			/*
 			ViewBag.ListApp = GetAplicaciones();
             ViewBag.ListPages = GetPages();
             ViewData["Usuario"] = getUserName();
+			*/
 			
             if (id == null)
             {
@@ -120,9 +123,11 @@ namespace @Model.ControllerNamespace
         // GET: @routePrefix/Create
         public IActionResult Create()
         {
+			/*
 			ViewBag.ListApp = GetAplicaciones();
             ViewBag.ListPages = GetPages();
             ViewData["Usuario"] = getUserName();
+			*/
 			
 @{
     foreach (var property in relatedProperties.Values)
@@ -158,10 +163,12 @@ namespace @Model.ControllerNamespace
                         ViewBag.ErrorDb = exp.InnerException.Message;                        
                     else
                         ModelState.AddModelError("", exp.Message);
-                        
+               
+					/*
                     ViewBag.ListApp = GetAplicaciones();
                     ViewBag.ListPages = GetPages();
                     ViewData["Usuario"] = getUserName();
+					*/
                     return View();
                 }  
             }
@@ -177,9 +184,11 @@ namespace @Model.ControllerNamespace
         // GET: @routePrefix/Edit/5
         public async Task<IActionResult> Edit(@primaryKeyNullableTypeName id)
         {
+			/*
 			ViewBag.ListApp = GetAplicaciones();
             ViewBag.ListPages = GetPages();
             ViewData["Usuario"] = getUserName();			
+			*/
 
             if (id == null)
             {
@@ -237,10 +246,12 @@ namespace @Model.ControllerNamespace
                         ViewBag.ErrorDb = exp.InnerException.Message;                        
                     else
                         ModelState.AddModelError("", exp.Message);
-                        
+               
+					/*
                     ViewBag.ListApp = GetAplicaciones();
                     ViewBag.ListPages = GetPages();
                     ViewData["Usuario"] = getUserName();
+					*/
                     return View(@Model.ModelVariable);
                 }
                 return RedirectToAction(nameof(Index));
@@ -257,9 +268,11 @@ namespace @Model.ControllerNamespace
         // GET: @routePrefix/Delete/5
         public async Task<IActionResult> Delete(@primaryKeyNullableTypeName id)
         {
+			/*
 			ViewBag.ListApp = GetAplicaciones();
             ViewBag.ListPages = GetPages();
             ViewData["Usuario"] = getUserName();
+			*/
 			
             if (id == null)
             {
@@ -294,10 +307,12 @@ namespace @Model.ControllerNamespace
                     ViewBag.ErrorDb = exp.InnerException.Message;                        
                 else
                     ModelState.AddModelError("", exp.Message);
-                    
+            
+				/*
                 ViewBag.ListApp = GetAplicaciones();
                 ViewBag.ListPages = GetPages();
                 ViewData["Usuario"] = getUserName();
+				*/
                 return View();
             }     
         }

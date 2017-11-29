@@ -2,6 +2,8 @@
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using ReAl.Template.Lumino.Helpers;
 using ReAl.Template.Lumino.Models;
 
@@ -10,20 +12,35 @@ namespace ReAl.Template.Lumino.Controllers
     public class BaseController : Controller
     {
         protected readonly db_seguridadContext _context;
-
+        
         public BaseController(db_seguridadContext context)
         {
             _context = context;
         }
         
-        public string getLogin()
+        public override void OnActionExecuted(ActionExecutedContext context)
+        {
+            ViewBag.ListApp = GetAplicaciones();
+            ViewBag.ListPages = GetPages();
+            ViewBag.CurrentApp = GetCurrentApp();            
+            ViewData["Usuario"] = GetUserName();            
+        }
+
+        public string GetCurrentApp()
+        {
+            if (this.HttpContext.Session.Keys.Contains("currentApp"))
+                return this.HttpContext.Session.GetString("currentApp").ToString();
+            return null;
+        }
+        
+        public string GetLogin()
         {
             if (User.Identity.IsAuthenticated)
                 return User.Identity.Name;
             return null;
         }
 
-        public string getUserName()
+        public string GetUserName()
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -39,7 +56,7 @@ namespace ReAl.Template.Lumino.Controllers
             return null;
         }
 
-        public SegUsuarios getUser()
+        public SegUsuarios GetUser()
         {
             if (User.Identity.IsAuthenticated)
             {
