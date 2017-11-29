@@ -12,12 +12,14 @@ namespace ReAl.Template.Lumino.Pages.Template
         public List<SegAplicaciones> ListApp { get; private set; }
         public List<SegPaginas> ListPages { get; private set; }
         public string Usuario { get; private set; }
+        public string CurrentApp { get; private set; }
 
         public void OnGet()
         {
             ListApp = this.GetAplicaciones();
             ListPages = this.GetPages();
-            Usuario = this.getUserName();
+            Usuario = this.GetUserName();
+            CurrentApp = GetCurrentApp();
         }
     }
 }

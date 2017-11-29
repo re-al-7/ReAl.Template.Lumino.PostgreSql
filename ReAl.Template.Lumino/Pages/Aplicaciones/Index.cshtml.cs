@@ -26,7 +26,7 @@ namespace ReAl.Template.Lumino.Pages.Aplicaciones
         {
             ListApp = this.GetAplicaciones();
             ListPages = this.GetPages();
-            Usuario = this.getUserName();
+            Usuario = this.GetUserName();
 
             Listado = _context.SegAplicaciones.ToList();
         }

@@ -103,13 +103,13 @@
             </div>
             <div class="dropdown" style="width: 90%">
                 <button class="btn btn-primary dropdown-toggle" style="width: 100%;" type="button" data-toggle="dropdown">
-                    @if (ViewBag.CurrentApp == null)
+                    @if (Model.CurrentApp == null)
                     {
                         <span>Seleccione App</span>
                     }
                     else
                     {
-                        @ViewBag.CurrentApp;
+                        @Model.CurrentApp;
                     }
                     <span class="caret"></span>
                 </button>
@@ -137,7 +137,7 @@
             {
                 <li class="@(@ViewContext.RouteData.Values["Page"].ToString().Split('/')[1].ToString() == @item.Metodo
                                  && @ViewContext.RouteData.Values["Page"].ToString().Split('/')[2].ToString() == @item.Accion ? "active" : "")">                    
-                    <a asp-area="" asp-controller=@item.Metodo asp-action=@item.Accion><em class="fa fa-dashboard">&nbsp;</em> @item.Sigla </a>
+                    <a asp-area="" asp-controller=@item.Metodo asp-action=@item.Accion><em class="@item.Icono">&nbsp;</em> @item.Sigla </a>
                 </li>
             }            
             <li class="parent "><a data-toggle="collapse" href="#sub-item-1">

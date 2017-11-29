@@ -26,7 +26,7 @@ namespace ReAl.Template.Lumino.Pages.Aplicaciones
         {
             ListApp = this.GetAplicaciones();
             ListPages = this.GetPages();
-            Usuario = this.getUserName();
+            Usuario = this.GetUserName();
             
             if (MiAplicacion == null)
             {
@@ -51,7 +51,7 @@ namespace ReAl.Template.Lumino.Pages.Aplicaciones
             {
                 ListApp = this.GetAplicaciones();
                 ListPages = this.GetPages();
-                Usuario = this.getUserName();
+                Usuario = this.GetUserName();
                 ModelState.AddModelError("", string.Join("; ", ModelState.Values
                     .SelectMany(x => x.Errors)
                     .Select(x => x.ErrorMessage)));
