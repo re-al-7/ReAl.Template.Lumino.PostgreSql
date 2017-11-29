@@ -23,7 +23,7 @@ namespace ReAl.Template.Lumino.Models
             return null;
         }
         
-        public string getLogin()
+        public string GetLogin()
         {
             if (User.Identity.IsAuthenticated)
                 return User.Identity.Name;
@@ -40,7 +40,10 @@ namespace ReAl.Template.Lumino.Models
                 else
                 {
                     var objPer = _context.SegPersonas.SingleOrDefault(persona => persona.Idspe == obj.Idspe);
-                    return objPer.Nombres + " " + objPer.Apellidos;
+                    if ((objPer.Nombres + " " + objPer.Apellidos).ToString().Length > 30)
+                        return objPer.Nombres;
+                    else
+                        return objPer.Nombres + " " + objPer.Apellidos;
                 }
             }
             return null;

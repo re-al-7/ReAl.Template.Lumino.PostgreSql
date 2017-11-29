@@ -70,7 +70,7 @@ namespace ReAl.Template.Lumino.Controllers
                 identity.AddClaim(new Claim(ClaimTypes.GivenName, objPer.Nombres + " " + objPer.Apellidos));
 
                 //Añadimos la aplicacion por defecto
-                var objApp = _context.SegAplicaciones.First();
+                var objApp = _context.SegAplicaciones.OrderBy(x => x.Nombre).First();
                 HttpContext.Session.SetString("currentApp", objApp.Sigla);
                 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));

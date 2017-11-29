@@ -99,7 +99,7 @@
             <div class="profile-usertitle">
                 <div class="profile-usertitle-name">
                     <a asp-area="" asp-controller="Template" asp-action="Profile">
-                        @ViewData["Usuario"]
+                        @ViewBag.Usuario
                     </a>                    
                 </div>
                 <div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>                                
@@ -121,7 +121,7 @@
                     {
                         <li>                            
                             <a asp-area="" asp-controller="Dashboard" asp-action="Index" asp-route-app=@item.Sigla >
-                                @item.Nombre
+                                @item.Sigla - @item.Nombre
                             </a>
                         </li>
                     }

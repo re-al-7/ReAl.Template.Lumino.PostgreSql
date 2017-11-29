@@ -16,7 +16,7 @@ namespace ReAl.Template.Lumino.Helpers
     {
         public static List<SegAplicaciones> GetAplicaciones(db_seguridadContext context)
         {
-            return context.SegAplicaciones.ToList();            
+            return context.SegAplicaciones.OrderBy(x => x.Nombre) .ToList();            
         }
         
         public static List<SegPaginas> GetPages(HttpContext miContexto, db_seguridadContext context)
@@ -34,61 +34,6 @@ namespace ReAl.Template.Lumino.Helpers
                 paginas.Idsap == objApp.Idsap).OrderBy(x => x.Prioridad != null) // False comes before true
                     .ThenBy(x => x.Prioridad).ToList();
 
-            /*
-            obj = new SegPaginas();
-            obj.descripcionspg = "Hijo normal";
-            obj.nombrespg = "segusuario";
-            obj.nombremenuspg = "index";
-            lstPaginas.Add(obj);
-            
-            obj = new SegPaginas();
-            obj.descripcionspg = "Dashboard";
-            obj.nombrespg = "Template";
-            obj.nombremenuspg = "Dashboard";
-            lstPaginas.Add(obj);
-            
-            obj = new SegPaginas();
-            obj.descripcionspg = "Widgets";
-            obj.nombrespg = "Template";
-            obj.nombremenuspg = "Widgets";
-            lstPaginas.Add(obj);
-            
-            obj = new SegPaginas();
-            obj.descripcionspg = "Charts";
-            obj.nombrespg = "Template";
-            obj.nombremenuspg = "Charts";
-            lstPaginas.Add(obj);
-            
-            obj = new SegPaginas();
-            obj.descripcionspg = "Buttons";
-            obj.nombrespg = "Template";
-            obj.nombremenuspg = "Buttons";
-            lstPaginas.Add(obj);
-            
-            obj = new SegPaginas();
-            obj.descripcionspg = "Forms";
-            obj.nombrespg = "Template";
-            obj.nombremenuspg = "Forms";
-            lstPaginas.Add(obj);
-            
-            obj = new SegPaginas();
-            obj.descripcionspg = "Tables";
-            obj.nombrespg = "Template";
-            obj.nombremenuspg = "Tables";
-            lstPaginas.Add(obj);
-            
-            obj = new SegPaginas();
-            obj.descripcionspg = "Alerts & Panels";
-            obj.nombrespg = "Template";
-            obj.nombremenuspg = "Panels";
-            lstPaginas.Add(obj);
-            
-            obj = new SegPaginas();
-            obj.descripcionspg = "Icons";
-            obj.nombrespg = "Template";
-            obj.nombremenuspg = "Icons";
-            lstPaginas.Add(obj);
-*/
         }
     }
 }

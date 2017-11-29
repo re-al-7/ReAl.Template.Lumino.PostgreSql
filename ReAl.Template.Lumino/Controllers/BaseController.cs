@@ -23,7 +23,7 @@ namespace ReAl.Template.Lumino.Controllers
             ViewBag.ListApp = GetAplicaciones();
             ViewBag.ListPages = GetPages();
             ViewBag.CurrentApp = GetCurrentApp();            
-            ViewData["Usuario"] = GetUserName();            
+            ViewBag.Usuario = GetUserName();            
         }
 
         public string GetCurrentApp()
@@ -46,11 +46,19 @@ namespace ReAl.Template.Lumino.Controllers
             {
                 var obj = _context.SegUsuarios.SingleOrDefault(m => m.Login == User.Identity.GetGivenName());
                 if (obj == null)
-                    return User.Identity.GetGivenName();
+                {
+                    if (User.Identity.GetGivenName().Length > 30)
+                        return User.Identity.GetGivenName().Split(' ')[0];
+                    else
+                        return User.Identity.GetGivenName();
+                }
                 else
                 {
                     var objPer = _context.SegPersonas.SingleOrDefault(persona => persona.Idspe == obj.Idspe);
-                    return objPer.Nombres + " " + objPer.Apellidos;
+                    if ((objPer.Nombres + " " + objPer.Apellidos).ToString().Length > 30)
+                        return objPer.Nombres;
+                    else
+                        return objPer.Nombres + " " + objPer.Apellidos;
                 }
             }
             return null;
