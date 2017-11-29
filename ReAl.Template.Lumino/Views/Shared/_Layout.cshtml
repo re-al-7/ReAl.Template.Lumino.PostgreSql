@@ -168,5 +168,17 @@
     
 @RenderSection("IncludeScripts", required: false)
 @RenderSection("Scripts", required: false)
+
+@if (ViewBag.ErrorDb != null)
+{
+    <script>
+        swal({
+            title: 'Atención',
+            width: 800,
+            type: 'info',
+            html: "<div align='left'>@Html.Raw(ViewBag.ErrorDb)</div>"
+        });
+    </script>
+}
 </body>
 </html>
