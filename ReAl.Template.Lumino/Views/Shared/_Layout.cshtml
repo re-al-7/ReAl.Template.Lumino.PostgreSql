@@ -1,4 +1,7 @@
-﻿@using ReAl.Template.Lumino.Models
+﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.Azure.KeyVault.Models
+@using ReAl.Template.Lumino.Models
+@using Action = System.Action
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,14 +105,23 @@
                 <div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>                                
             </div>            
             <div class="dropdown" style="width: 90%">
-                <button class="btn btn-primary dropdown-toggle" style="width: 100%; " type="button" data-toggle="dropdown">Clasificadores
-                    <span class="caret"></span></button>
+                <button class="btn btn-primary dropdown-toggle" style="width: 100%;" type="button" data-toggle="dropdown">
+                    @if (ViewBag.CurrentApp == null)
+                    {
+                        <span>Seleccione App</span>
+                    }
+                    else
+                    {
+                        @ViewBag.CurrentApp;
+                    }
+                    <span class="caret"></span>
+                </button>
                 <ul class="dropdown-menu" style="width: 100%; margin-top: 0px">
                     @foreach (SegAplicaciones item in ViewBag.ListApp)
                     {
                         <li>                            
                             <a asp-area="" asp-controller="Dashboard" asp-action="Index" asp-route-app=@item.Sigla >
-                                @item.Sigla
+                                @item.Nombre
                             </a>
                         </li>
                     }
