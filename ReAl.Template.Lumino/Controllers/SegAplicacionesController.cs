@@ -17,21 +17,13 @@ namespace ReAl.Template.Lumino.Controllers
 
         // GET: SegAplicaciones
         public async Task<IActionResult> Index()
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {           
             return View(await _context.SegAplicaciones.ToListAsync());
         }
 
         // GET: SegAplicaciones/Details/5
         public async Task<IActionResult> Details(long? id)
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {            
             if (id == null)
             {
                 return NotFound();
@@ -49,11 +41,7 @@ namespace ReAl.Template.Lumino.Controllers
 
         // GET: SegAplicaciones/Create
         public IActionResult Create()
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {           
             return View();
         }
 
@@ -76,10 +64,6 @@ namespace ReAl.Template.Lumino.Controllers
         // GET: SegAplicaciones/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
             if (id == null)
             {
                 return NotFound();
@@ -132,10 +116,6 @@ namespace ReAl.Template.Lumino.Controllers
         // GET: SegAplicaciones/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
             if (id == null)
             {
                 return NotFound();

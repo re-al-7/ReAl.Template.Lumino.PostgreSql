@@ -17,22 +17,14 @@ namespace ReAl.Template.Lumino.Controllers
 
         // GET: SegConfiguracion
         public async Task<IActionResult> Index()
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {            
             var db_seguridadContext = _context.SegConfiguracion.Include(s => s.IdstaNavigation);
             return View(await db_seguridadContext.ToListAsync());
         }
 
         // GET: SegConfiguracion/Details/5
         public async Task<IActionResult> Details(long? id)
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {            
             if (id == null)
             {
                 return NotFound();
@@ -51,11 +43,7 @@ namespace ReAl.Template.Lumino.Controllers
 
         // GET: SegConfiguracion/Create
         public IActionResult Create()
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {            
             ViewData["Idsta"] = new SelectList(_context.SegTablas, "Idsta", "Alias");
             return View();
         }
@@ -66,11 +54,7 @@ namespace ReAl.Template.Lumino.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Idscf,Idsta,Configuracion,Funcion,Parametrosentrada,Parametrossalida,Descripcion,Apiestado,Apitransaccion,Usucre,Feccre,Usumod,Fecmod")] SegConfiguracion segConfiguracion)
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {            
             if (ModelState.IsValid)
             {
                 _context.Add(segConfiguracion);
@@ -83,11 +67,7 @@ namespace ReAl.Template.Lumino.Controllers
 
         // GET: SegConfiguracion/Edit/5
         public async Task<IActionResult> Edit(long? id)
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {           
             if (id == null)
             {
                 return NotFound();
@@ -108,11 +88,7 @@ namespace ReAl.Template.Lumino.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("Idscf,Idsta,Configuracion,Funcion,Parametrosentrada,Parametrossalida,Descripcion,Apiestado,Apitransaccion,Usucre,Feccre,Usumod,Fecmod")] SegConfiguracion segConfiguracion)
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {            
             if (id != segConfiguracion.Idscf)
             {
                 return NotFound();
@@ -144,11 +120,7 @@ namespace ReAl.Template.Lumino.Controllers
 
         // GET: SegConfiguracion/Delete/5
         public async Task<IActionResult> Delete(long? id)
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {            
             if (id == null)
             {
                 return NotFound();
@@ -169,11 +141,7 @@ namespace ReAl.Template.Lumino.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {           
             var segConfiguracion = await _context.SegConfiguracion.SingleOrDefaultAsync(m => m.Idscf == id);
             _context.SegConfiguracion.Remove(segConfiguracion);
             await _context.SaveChangesAsync();
@@ -181,11 +149,7 @@ namespace ReAl.Template.Lumino.Controllers
         }
 
         private bool SegConfiguracionExists(long id)
-        {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-            
+        {            
             return _context.SegConfiguracion.Any(e => e.Idscf == id);
         }
     }

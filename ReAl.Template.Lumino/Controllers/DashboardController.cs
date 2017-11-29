@@ -17,13 +17,7 @@ namespace ReAl.Template.Lumino.Controllers
         {
             if (app != "")
                 HttpContext.Session.SetString("currentApp", app);
-
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-
-            ViewData["app"] = "Your contact page.";
-            ViewData["Message"] = "Your contact page.";            
+            
             return View();
         }
     }

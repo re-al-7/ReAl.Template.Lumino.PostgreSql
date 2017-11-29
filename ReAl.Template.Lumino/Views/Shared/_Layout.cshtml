@@ -139,7 +139,7 @@
             @foreach (SegPaginas item in ViewBag.ListPages)
             {
                 <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == @item.Metodo && ViewContext.RouteData.Values["Action"].ToString() == @item.Accion ? "active" : "")">                    
-                    <a asp-area="" asp-controller=@item.Metodo asp-action=@item.Accion><em class="fa fa-dashboard">&nbsp;</em> @item.Nombremenu</a>
+                    <a asp-area="" asp-controller=@item.Metodo asp-action=@item.Accion><em class="@item.Icono">&nbsp;</em> @item.Nombremenu</a>
                 </li>
             }
             <li class="parent "><a data-toggle="collapse" href="#sub-item-1">

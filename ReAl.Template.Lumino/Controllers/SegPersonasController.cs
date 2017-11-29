@@ -19,19 +19,22 @@ namespace ReAl.Template.Lumino.Controllers
         // GET: SegPersonas
         public async Task<IActionResult> Index()
         {
+			/*
 			ViewBag.ListApp = GetAplicaciones();
             ViewBag.ListPages = GetPages();
             ViewData["Usuario"] = getUserName();
-			
+			*/
             return View(await _context.SegPersonas.ToListAsync());
         }
 
         // GET: SegPersonas/Details/5
         public async Task<IActionResult> Details(long? id)
         {
+			/*
 			ViewBag.ListApp = GetAplicaciones();
             ViewBag.ListPages = GetPages();
             ViewData["Usuario"] = getUserName();
+			*/
 			
             if (id == null)
             {
@@ -51,9 +54,11 @@ namespace ReAl.Template.Lumino.Controllers
         // GET: SegPersonas/Create
         public IActionResult Create()
         {
+			/*
 			ViewBag.ListApp = GetAplicaciones();
             ViewBag.ListPages = GetPages();
             ViewData["Usuario"] = getUserName();
+			*/
 			
             return View();
         }
@@ -79,10 +84,12 @@ namespace ReAl.Template.Lumino.Controllers
                         ViewBag.ErrorDb = exp.InnerException.Message;                        
                     else
                         ModelState.AddModelError("", exp.Message);
-                        
+               
+					/*
                     ViewBag.ListApp = GetAplicaciones();
                     ViewBag.ListPages = GetPages();
                     ViewData["Usuario"] = getUserName();
+					*/
                     return View();
                 }  
             }
@@ -92,9 +99,11 @@ namespace ReAl.Template.Lumino.Controllers
         // GET: SegPersonas/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
+			/*
 			ViewBag.ListApp = GetAplicaciones();
             ViewBag.ListPages = GetPages();
             ViewData["Usuario"] = getUserName();			
+			*/
 
             if (id == null)
             {
@@ -146,10 +155,12 @@ namespace ReAl.Template.Lumino.Controllers
                         ViewBag.ErrorDb = exp.InnerException.Message;                        
                     else
                         ModelState.AddModelError("", exp.Message);
-                        
+               
+					/*
                     ViewBag.ListApp = GetAplicaciones();
                     ViewBag.ListPages = GetPages();
                     ViewData["Usuario"] = getUserName();
+					*/
                     return View(segPersonas);
                 }
                 return RedirectToAction(nameof(Index));
@@ -160,9 +171,11 @@ namespace ReAl.Template.Lumino.Controllers
         // GET: SegPersonas/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
+			/*
 			ViewBag.ListApp = GetAplicaciones();
             ViewBag.ListPages = GetPages();
             ViewData["Usuario"] = getUserName();
+			*/
 			
             if (id == null)
             {
@@ -197,10 +210,12 @@ namespace ReAl.Template.Lumino.Controllers
                     ViewBag.ErrorDb = exp.InnerException.Message;                        
                 else
                     ModelState.AddModelError("", exp.Message);
-                    
+            
+				/*
                 ViewBag.ListApp = GetAplicaciones();
                 ViewBag.ListPages = GetPages();
                 ViewData["Usuario"] = getUserName();
+				*/
                 return View();
             }     
         }

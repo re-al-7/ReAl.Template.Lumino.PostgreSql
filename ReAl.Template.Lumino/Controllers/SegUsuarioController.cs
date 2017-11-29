@@ -16,10 +16,6 @@ namespace ReAl.Template.Lumino.Controllers
         // GET: SegUsuario
         public ActionResult Index()
         {
-            ViewBag.ListApp = this.GetAplicaciones();
-            ViewBag.ListPages = this.GetPages();
-            ViewData["Usuario"] = this.getUserName();
-
             List<SegUsuarios> lista = new List<SegUsuarios>();
 
             for (int i = 0; i < 500; i++)
