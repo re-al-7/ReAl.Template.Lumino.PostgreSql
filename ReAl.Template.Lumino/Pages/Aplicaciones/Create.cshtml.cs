@@ -16,6 +16,7 @@ namespace ReAl.Template.Lumino.Pages.Aplicaciones
         public List<SegAplicaciones> ListApp { get; private set; }
         public List<SegPaginas> ListPages { get; private set; }
         public string Usuario { get; private set; }
+        public string CurrentApp { get; private set; }
 
         [BindProperty]
         public SegAplicaciones MiAplicacion { get; set; }
@@ -27,6 +28,7 @@ namespace ReAl.Template.Lumino.Pages.Aplicaciones
             ListApp = this.GetAplicaciones();
             ListPages = this.GetPages();
             Usuario = this.GetUserName();
+            CurrentApp = this.GetCurrentApp();
         }
         
         [HttpPost]
