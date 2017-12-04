@@ -10,6 +10,11 @@ namespace ReAl.Template.Lumino.Models
     public class BasePageModel : PageModel
     {
         public readonly db_seguridadContext _context;
+        public List<SegAplicaciones> ListApp { get; internal set; }
+        public List<SegPaginas> ListPages { get; internal set; }
+        public string Usuario { get; internal  set; }
+        public string CurrentApp { get; internal  set; }        
+        public string ErrorDb { get; internal  set; }
 
         public BasePageModel(db_seguridadContext context)
         {
@@ -36,7 +41,12 @@ namespace ReAl.Template.Lumino.Models
             {
                 var obj = _context.SegUsuarios.SingleOrDefault(m => m.Login == User.Identity.GetGivenName());
                 if (obj == null)
-                    return User.Identity.GetGivenName();
+                {
+                    if (User.Identity.GetGivenName().Length > 30)
+                        return User.Identity.GetGivenName().Split(' ')[0];
+                    else
+                        return User.Identity.GetGivenName();
+                }
                 else
                 {
                     var objPer = _context.SegPersonas.SingleOrDefault(persona => persona.Idspe == obj.Idspe);
