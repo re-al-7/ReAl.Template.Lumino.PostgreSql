@@ -11,6 +11,12 @@
     }
     else if (Model.IsLayoutPageSelected)
     {
+@:@@section Styles
+@:{
+	@:<!-- Sweetalert CSS -->
+	@:<link href="~/lib/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+@:}	
+@:
 @:@@{
     @:ViewData["Title"] = "@Model.ViewName";
         if (!string.IsNullOrEmpty(Model.LayoutPageFile))
@@ -19,7 +25,11 @@
         }
 @:}
 @:
-@:<h2>@Model.ViewName</h2>
+@:<div class="row">
+	@:<div class="col-lg-12">
+		@:<h1 class="page-header">@Model.ViewDataTypeShortName</h1>
+	@:</div>
+@:</div><!--/.row-->
 @:
     }
     else
@@ -39,11 +49,14 @@
 @:
         //    PushIndent("    ");
     }
-@:<h4>@Model.ViewDataTypeShortName</h4>
-@:<hr />
 @:<div class="row">
-    @:<div class="col-md-4">
-        @:<form method="post">
+@:<div class="col-lg-12">
+@:<div class="panel panel-default">
+@:<div class="panel-heading">@Model.ViewName</div>
+@:<div class="panel-body">	
+@:<div class="row">
+    @:<div class="col-md-6">
+        @:<form role="form" method="post" id="EditForm" class="form-horizontal row-border">
             @:<div asp-validation-summary="ModelOnly" class="text-danger"></div>
         foreach (PropertyMetadata property in Model.ModelMetadata.Properties)
         {
@@ -63,8 +76,10 @@
                 if (property.IsForeignKey)
                 {
             @:<div class="form-group">
-                @:<label asp-for="@(Model.ModelTypeName).@property.PropertyName" class="control-label"></label>
-                @:<select asp-for="@(Model.ModelTypeName).@property.PropertyName" class="form-control" asp-items="ViewBag.@property.PropertyName"></select>
+                @:<label asp-for="@(Model.ModelTypeName).@property.PropertyName" class="col-md-2 control-label"></label>
+				@:<div class="col-md-10">
+					@:<select asp-for="@(Model.ModelTypeName).@property.PropertyName" class="form-control" asp-items="ViewBag.@property.PropertyName"></select>
+				@:</div>
                 @:<span asp-validation-for="@(Model.ModelTypeName).@property.PropertyName" class="text-danger"></span>
             @:</div>
                     continue;
@@ -84,16 +99,27 @@
                 else if (property.IsEnum && !property.IsEnumFlags)
                 {
             @:<div class="form-group">
-                @:<label asp-for="@(Model.ModelTypeName).@property.PropertyName" class="control-label"></label>
-                @:<select asp-for="@(Model.ModelTypeName).@property.PropertyName" class="form-control"></select>
+                @:<label asp-for="@(Model.ModelTypeName).@property.PropertyName" class="col-md-2 control-label"></label>
+                @:<div class="col-md-10">
+					@:<select asp-for="@(Model.ModelTypeName).@property.PropertyName" class="form-control"></select>
+				@:<div>
                 @:<span asp-validation-for="@(Model.ModelTypeName).@property.PropertyName" class="text-danger"></span>
             @:</div>
                 }
+				else if (property.PropertyName == "Apiestado" || property.PropertyName == "Apitransaccion" || property.PropertyName == "Feccre" || property.PropertyName == "Usucre" || property.PropertyName == "Fecmod" || property.PropertyName == "Usumod")
+				{
+				@:<input asp-for="@(Model.ModelTypeName).@property.PropertyName" class="form-control" type="hidden" />
+				}
+				else if (property.IsPrimaryKey)
+				{
+				}
                 else
                 {
             @:<div class="form-group">
-                @:<label asp-for="@(Model.ModelTypeName).@property.PropertyName" class="control-label"></label>
-                @:<input asp-for="@(Model.ModelTypeName).@property.PropertyName" class="form-control" />
+                @:<label asp-for="@(Model.ModelTypeName).@property.PropertyName" class="col-md-2 control-label"></label>
+				@:<div class="col-md-10">
+					@:<input asp-for="@(Model.ModelTypeName).@property.PropertyName" class="form-control" />
+				@:</div>
                 @:<span asp-validation-for="@(Model.ModelTypeName).@property.PropertyName" class="text-danger"></span>
             @:</div>
                 }
@@ -107,14 +133,21 @@
         }
     }
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+				<div class="col-md-10">
+					<input type="submit" value="Guardar cambios" class="btn btn-default" onclick="Validate(this, event);"/>
+				</div>
             </div>
         </form>
     </div>
 </div>
 
+</div>
+</div>
+</div>
+</div><!-- /.row -->
+
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index">Volver</a>
 </div>
 
 @{
@@ -122,8 +155,63 @@
     {
 @:@@section Scripts {
     @:@@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@:<!-- Sweetalert JavaScript -->
+	@:<script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+	@:
+	@:<script>
+		@:function Validate(ctl, event)
+		@:{
+			@:event.preventDefault();
+			@:swal({
+				@:title: "¿Seguro que desea guardar los cambios del registro?",
+				@:text: "Verifique la información antes de aceptar!",
+				@:type: "question",
+				@:showCancelButton: true,
+				@:confirmButtonColor: "#DD6B55",
+				@:confirmButtonText: "Actualizar",
+				@:cancelButtonText: "Cancelar"
+			@:}).then(function(isConfirm) {
+				@:if (isConfirm.value) {
+					@:$("#EditForm").submit();
+				@:} else {
+					@:swal("Cancelled", "Se ha cancelado la accion", "error");
+				@:}
+			@:});
+		@:}
+	@:</script>
 @:}
     }
+	else
+	{
+@:@@section Scripts
+@:{
+	@:<!-- Sweetalert JavaScript -->
+	@:<script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+	@:
+	@:<script>
+		@:function Validate(ctl, event)
+		@:{
+			@:event.preventDefault();
+			@:swal({
+				@:title: "¿Seguro que desea guardar los cambios del registro?",
+				@:text: "Verifique la información antes de aceptar!",
+				@:type: "question",
+				@:showCancelButton: true,
+				@:confirmButtonColor: "#DD6B55",
+				@:confirmButtonText: "Actualizar",
+				@:cancelButtonText: "Cancelar"
+			@:}).then(function(isConfirm) {
+				@:if (isConfirm.value) {
+					@:$("#EditForm").submit();
+				@:} else {
+					@:swal("Cancelled", "Se ha cancelado la accion", "error");
+				@:}
+			@:});
+		@:}
+	@:</script>
+@:}	
+@:
+	}
     // The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
     if (!Model.IsPartialView && !Model.IsLayoutPageSelected)
     {

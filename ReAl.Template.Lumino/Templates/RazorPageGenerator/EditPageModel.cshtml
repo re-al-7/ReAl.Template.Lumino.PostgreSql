@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 @{
     var primaryKeyName = Model.ModelMetadata.PrimaryKeys[0].PropertyName;
     var primaryKeyShortTypeName = Model.ModelMetadata.PrimaryKeys[0].ShortTypeName;
@@ -35,13 +36,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace @Model.NamespaceName
 {
-    public class @Model.PageModelClassName : PageModel
+    public class @Model.PageModelClassName : BasePageModel
     {
-        private readonly @Model.ContextTypeName _context;
-
-        public @(Model.PageModelClassName)(@Model.ContextTypeName context)
+        public @Model.PageModelClassName (db_seguridadContext context) : base(context)
         {
-            _context = context;
         }
 
         [BindProperty]
@@ -53,7 +51,12 @@ namespace @Model.NamespaceName
             {
                 return NotFound();
             }
-
+			
+			ListApp = this.GetAplicaciones();
+            ListPages = this.GetPages();
+            Usuario = this.GetUserName();
+            CurrentApp = this.GetCurrentApp();
+			
             @Model.ViewDataTypeShortName = await _context.@(Model.ModelTypeName)@(inlineIncludes).SingleOrDefaultAsync(m => m.@(primaryKeyName) == id);
 
             if (@Model.ViewDataTypeShortName == null)
@@ -77,16 +80,30 @@ namespace @Model.NamespaceName
             }
 
             _context.Attach(@(Model.ModelTypeName)).State = EntityState.Modified;
-
+			(@Model.ModelTypeName).Apitransaccion = "MODIFICAR";
+			
             try
-            {
+            {	
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
                 
             }
-
+			catch (Exception exp)
+			{
+				if (exp.InnerException is NpgsqlException)
+					ErrorDb = exp.InnerException.Message;                        
+				else
+					ModelState.AddModelError("", exp.Message);
+		   
+				ListApp = this.GetAplicaciones();
+				ListPages = this.GetPages();
+				Usuario = this.GetUserName();
+				CurrentApp = this.GetCurrentApp();
+				
+				return Page();
+			}
             return RedirectToPage("./Index");
         }
     }

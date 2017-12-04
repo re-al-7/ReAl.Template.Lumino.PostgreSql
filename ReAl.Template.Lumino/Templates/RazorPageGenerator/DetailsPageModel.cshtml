@@ -34,23 +34,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace @Model.NamespaceName
 {
-    public class @Model.PageModelClassName : PageModel
+    public class @Model.PageModelClassName : BasePageModel
     {
-        private readonly @Model.ContextTypeName _context;
-
-        public @(Model.PageModelClassName)(@Model.ContextTypeName context)
+        public @Model.PageModelClassName (db_seguridadContext context) : base(context)
         {
-            _context = context;
         }
 
-        public @Model.ViewDataTypeShortName @Model.ViewDataTypeShortName { get; set; }
-
+		public @Model.ViewDataTypeShortName @Model.ViewDataTypeShortName { get; set; }
+		
         public async Task<IActionResult> OnGetAsync(@primaryKeyNullableTypeName id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+			
+			ListApp = this.GetAplicaciones();
+            ListPages = this.GetPages();
+            Usuario = this.GetUserName();
+            CurrentApp = this.GetCurrentApp();
 
             @Model.ViewDataTypeShortName = await _context.@(Model.ModelTypeName)@(inlineIncludes).SingleOrDefaultAsync(m => m.@(primaryKeyName) == id);
 
