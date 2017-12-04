@@ -1,0 +1,90 @@
+@page
+@model ReAl.Template.Lumino.Pages.Roles.DetailsModel
+
+@section Styles
+{
+	<!-- Bootstrap-Table CSS -->
+	<link href="~/lib/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
+}	
+	
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">SegRoles</h1>
+	</div>
+</div><!--/.row-->
+
+<div class="row">
+<div class="col-lg-12">
+<div class="panel panel-default">
+<div class="panel-heading">Details</div>
+<div class="panel-body">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SegRoles.Sigla)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SegRoles.Sigla)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SegRoles.Descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SegRoles.Descripcion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SegRoles.Apiestado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SegRoles.Apiestado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SegRoles.Apitransaccion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SegRoles.Apitransaccion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SegRoles.Usucre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SegRoles.Usucre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SegRoles.Feccre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SegRoles.Feccre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SegRoles.Usumod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SegRoles.Usumod)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SegRoles.Fecmod)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SegRoles.Fecmod)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.SegRoles.Idsro">Editar</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+</div>
+</div>
+</div><!-- /.row -->
+
+@section Scripts
+{
+	<!-- Sweetalert JavaScript -->
+	<script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+}	
+

@@ -1,0 +1,85 @@
+@page
+@model ReAl.Template.Lumino.Pages.Roles.CreateModel
+
+@section Styles
+{
+	<!-- Sweetalert CSS -->
+	<link href="~/lib/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+}	
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header">SegRoles</h1>
+	</div>
+</div><!--/.row-->
+
+<div class="row">
+<div class="col-lg-12">
+<div class="panel panel-default">
+<div class="panel-heading">Create</div>
+<div class="panel-body">
+<div class="row">
+    <div class="col-md-6">
+        <form role="form" method="post" id="CreateForm" class="form-horizontal row-border">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SegRoles.Sigla" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="SegRoles.Sigla" class="form-control" />
+				</div>
+                <span asp-validation-for="SegRoles.Sigla" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SegRoles.Descripcion" class="col-md-2 control-label"></label>
+				<div class="col-md-10">
+					<input asp-for="SegRoles.Descripcion" class="form-control" />
+				</div>
+                <span asp-validation-for="SegRoles.Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear nuevo" class="btn btn-default" onclick="Validate(this, event);"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+</div><!-- /.row -->
+
+<div>
+    <a asp-page="Index">Volver</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	<!-- Sweetalert JavaScript -->
+	<script src="~/lib/sweetalert2/dist/sweetalert2.min.js"></script>
+	
+	<script>
+		function Validate(ctl, event)
+		{
+			event.preventDefault();
+			swal({
+				title: "¿Seguro que desea guardar el registro?",
+				text: "Verifique la información antes de aceptar!",
+				type: "question",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Crear",
+				cancelButtonText: "Cancelar"
+			}).then(function(isConfirm) {
+				if (isConfirm.value) {
+					$("#CreateForm").submit();
+				} else {
+					swal("Cancelled", "Se ha cancelado la accion", "error");
+				}
+			});
+		}
+	</script>
+}
