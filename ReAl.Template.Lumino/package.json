@@ -20,6 +20,12 @@
     "gulp-util": "^3.0.8",
     "gulp-zip": "^4.0.0",
     "merge-stream": "^1.0.1",
-    "run-sequence": "^2.2.0"
-  }
+    "run-sequence": "^2.2.0",
+    "snyk": "^1.316.1"
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
